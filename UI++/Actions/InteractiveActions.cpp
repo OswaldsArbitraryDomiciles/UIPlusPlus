@@ -276,6 +276,7 @@ namespace UIpp
 
 		CString domainController = GetXMLAttribute(m_actionData.pActionNode, XML_ATTRIBUTE_DOMAINCONTROLLER);
 		bool doNotFallBack = FTW::IsTrue(GetXMLAttribute(m_actionData.pActionNode, XML_ATTRIBUTE_DONOTFALLBACK, XML_ACTION_FALSE));
+		bool useForOSDJoin = FTW::IsTrue(GetXMLAttribute(m_actionData.pActionNode, XML_ATTRIBUTE_AUTH_USER_OSDJOIN, XML_ACTION_FALSE));
 
 		CDlgBase::DialogVisibilityFlags dlgFlags = CDlgBase::BuildDialogVisibilityFlags(true,
 			includeBack,
@@ -288,6 +289,7 @@ namespace UIpp
 			getGroups,
 			disableCancel,
 			doNotFallBack,
+			useForOSDJoin,
 			_tstoi(maxRetryCount));
 
 		CDlgUserAuth dlg(actionTitle, dlgFlags, m_actionData, &authdata);

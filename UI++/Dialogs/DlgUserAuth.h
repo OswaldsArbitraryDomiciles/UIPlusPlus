@@ -14,6 +14,7 @@ struct DlgUserAuthData
 		bool getGroups = false,
 		bool disableCancel = false, 
 		bool doNotFallback = false,
+		bool useForOSDJoin = false,
 		int maxRetries = 0)
 		:	m_authorizedUserGroups(pAuthorizedUserGroups),
 			m_userAttributes(pUserattributes),
@@ -21,7 +22,8 @@ struct DlgUserAuthData
 			m_getGroups(getGroups),
 			m_disableCancel(disableCancel),
 			m_doNotFallback(doNotFallback),
-			m_maxRetries(maxRetries)
+			m_maxRetries(maxRetries),
+			m_useForOSDJoin(useForOSDJoin)
 	{};
 
 	CString m_authorizedUserGroups;
@@ -31,6 +33,7 @@ struct DlgUserAuthData
 	bool m_getGroups;
 	bool m_disableCancel;
 	bool m_doNotFallback;
+	bool m_useForOSDJoin;
 };
 
 typedef DlgUserAuthData* PDlgUserAuthData;

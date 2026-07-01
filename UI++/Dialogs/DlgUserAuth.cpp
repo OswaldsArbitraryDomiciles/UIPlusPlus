@@ -72,6 +72,7 @@ void CDlgUserAuth::OnBnClickedNextaction()
 	PTSTR pUser = new TCHAR[MAX_STRING_LENGTH];
 	PTSTR pDom = new TCHAR[MAX_STRING_LENGTH];
 	PTSTR pCount = new TCHAR[MAX_STRING_LENGTH];
+	PTSTR pOSDUser = new TCHAR[MAX_STRING_LENGTH];
 
 	int count = 0;
 
@@ -109,6 +110,16 @@ void CDlgUserAuth::OnBnClickedNextaction()
 			pDC	= m_pData->m_domainController.GetString();
 
 		m_actionData.pLdap->Authenticate(pUser, pPass, pDom, pDC, m_pData->m_doNotFallback);
+
+		if (m_pData->m_useForOSDJoin == true)
+		{
+			//I am not very good with C++ - there is probably a better way to do this.
+			_tcscat_s(pOSDUser, MAX_STRING_LENGTH, pDom);
+			_tcscat_s(pOSDUser, MAX_STRING_LENGTH, VAR_BLACKSLASH);
+			_tcscat_s(pOSDUser, MAX_STRING_LENGTH, pUser);
+			CTSEnv::Instance().Set(m_actionData.pCMLog, VAR_OSDJOINACCOUNT, pOSDUser, true);
+			CTSEnv::Instance().Set(m_actionData.pCMLog, VAR_OSDJOINPASS, pPass, FALSE);
+		}
 
 		SecureZeroMemory(pPass, sizeof(TCHAR) * (MAX_STRING_LENGTH - 1));
 

@@ -203,6 +203,8 @@ const _TCHAR* const XML_ATTRIBUTE_TITLE_PROGRESS_DEF = (_T("Collecting values fr
 
 DWORD const XML_ATTRIBUTE_MAXRUNTIME_DEF =			60;
 
+const _TCHAR* const XML_ATTRIBUTE_AUTH_USER_OSDJOIN = (_T("UseForOSDJoin"));
+
 const _TCHAR* const	XML_ACTION_TYPE_USERINPUT =		(_T("Input"));
 const _TCHAR* const	XML_ACTION_TYPE_USERINFO =		(_T("Info"));
 const _TCHAR* const	XML_ACTION_TYPE_ERRORINFO =		(_T("ErrorInfo"));
@@ -404,6 +406,10 @@ const _TCHAR* const	VAR_IPADDRESS =					(_T("XIPAddress"));
 const _TCHAR* const	VAR_IPSUBNET =					(_T("XIPSubnet"));
 const _TCHAR* const	VAR_IPSUBNETMASK =				(_T("XIPSubnetMask"));
 const _TCHAR* const	VAR_MACADDRESS =				(_T("XMACAddress"));
+
+const _TCHAR* const	VAR_OSDJOINPASS =				(_T("OSDJoinPassword"));
+const _TCHAR* const	VAR_OSDJOINACCOUNT =	`		(_T("OSDJoinAccount"));
+const _TCHAR* const VAR_BLACKSLASH =				(_T("\\"));
 
 const _TCHAR* const	VALUE_OSVERSION_PE =			(_T("PE"));
 const _TCHAR* const	VALUE_OSVERSION_NT =			(_T("NT"));
