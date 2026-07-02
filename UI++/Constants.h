@@ -408,7 +408,7 @@ const _TCHAR* const	VAR_IPSUBNETMASK =				(_T("XIPSubnetMask"));
 const _TCHAR* const	VAR_MACADDRESS =				(_T("XMACAddress"));
 
 const _TCHAR* const	VAR_OSDJOINPASS =				(_T("OSDJoinPassword"));
-const _TCHAR* const	VAR_OSDJOINACCOUNT =	`		(_T("OSDJoinAccount"));
+const _TCHAR* const	VAR_OSDJOINACCOUNT =			(_T("OSDJoinAccount"));
 const _TCHAR* const VAR_BLACKSLASH =				(_T("\\"));
 
 const _TCHAR* const	VALUE_OSVERSION_PE =			(_T("PE"));

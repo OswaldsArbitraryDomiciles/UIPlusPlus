@@ -111,18 +111,6 @@ void CDlgUserAuth::OnBnClickedNextaction()
 
 		m_actionData.pLdap->Authenticate(pUser, pPass, pDom, pDC, m_pData->m_doNotFallback);
 
-		if (m_pData->m_useForOSDJoin == true)
-		{
-			//I am not very good with C++ - there is probably a better way to do this.
-			_tcscat_s(pOSDUser, MAX_STRING_LENGTH, pDom);
-			_tcscat_s(pOSDUser, MAX_STRING_LENGTH, VAR_BLACKSLASH);
-			_tcscat_s(pOSDUser, MAX_STRING_LENGTH, pUser);
-			CTSEnv::Instance().Set(m_actionData.pCMLog, VAR_OSDJOINACCOUNT, pOSDUser, true);
-			CTSEnv::Instance().Set(m_actionData.pCMLog, VAR_OSDJOINPASS, pPass, FALSE);
-		}
-
-		SecureZeroMemory(pPass, sizeof(TCHAR) * (MAX_STRING_LENGTH - 1));
-
 		m_actionData.pCMLog->WriteMsg(FTWCMLOG::CCMLog::MsgType::Info,
 			AfxGetThread()->m_nThreadID, __TFILE__, __LINE__,
 			FTW::FormatResourceString(IDS_LOGMSG_USERAUTH, pUser, pDom, ldap_err2string(LDAP_SUCCESS), pCount));
@@ -162,7 +150,17 @@ void CDlgUserAuth::OnBnClickedNextaction()
 								
 					if (groupMembershipOK && m_pData->m_getGroups)
 						CTSEnv::Instance().Set(m_actionData.pCMLog, VAR_AUTHUSERGROUPS, m_actionData.pLdap->ExtractGroupNamesFromAttributeList(ppAttributeVal));
-
+						if (m_pData->m_useForOSDJoin == true)
+						{
+							//I am not very good at C++ - there is probably a better way to do this.
+							_tcscpy_s(pOSDUser, MAX_STRING_LENGTH, pDom);
+							_tcscat_s(pOSDUser, MAX_STRING_LENGTH, VAR_BLACKSLASH);
+							_tcscat_s(pOSDUser, MAX_STRING_LENGTH, pUser);
+							CTSEnv::Instance().Set(m_actionData.pCMLog, VAR_OSDJOINACCOUNT, pOSDUser, true);
+							CTSEnv::Instance().Set(m_actionData.pCMLog, VAR_OSDJOINPASS, pPass, false);
+						}
+						//Have to delay the secure erase so the password can be captured for task sequence variable OSDJoinPassword
+						SecureZeroMemory(pPass, sizeof(TCHAR) * (MAX_STRING_LENGTH - 1));
 				}
 				else
 				{
@@ -180,6 +178,8 @@ void CDlgUserAuth::OnBnClickedNextaction()
 				}
 
 			}
+			
+			SecureZeroMemory(pPass, sizeof(TCHAR) * (MAX_STRING_LENGTH - 1));
 
 			if (groupMembershipOK && !m_fatalAuthError)
 			{
@@ -244,7 +244,7 @@ void CDlgUserAuth::OnBnClickedNextaction()
 	delete[] pUser;
 	delete[] pDom;
 	delete[] pCount;
-
+	delete[] pOSDUser;
 }
 
 void CDlgUserAuth::DisplayFinalError(DWORD msg)
